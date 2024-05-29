@@ -1,11 +1,13 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
 import 'package:chat_app/screens/login_screen/components/center_widget/center_widget.dart';
 import 'package:chat_app/screens/login_screen/components/login_content.dart';
+import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static String id = "LoginScreen";
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -56,23 +58,21 @@ class _LoginScreenState extends State<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Positioned(
-              top: -160,
-              left: -30,
-              child: topWidget(size.width),
-            ),
-            Positioned(
-              bottom: -180,
-              left: -40,
-              child: bottomWidget(size.width),
-            ),
-            CenterWidget(size: size),
-            const LoginContent()
-          ],
-        ),
+      body: Stack(
+        children: [
+          Positioned(
+            top: -160,
+            left: -30,
+            child: topWidget(size.width),
+          ),
+          Positioned(
+            bottom: -180,
+            left: -40,
+            child: bottomWidget(size.width),
+          ),
+          CenterWidget(size: size),
+          const LoginContent()
+        ],
       ),
     );
   }

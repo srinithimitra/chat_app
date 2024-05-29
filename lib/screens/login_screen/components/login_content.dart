@@ -1,12 +1,12 @@
 import 'package:chat_app/constants.dart';
-import 'package:chat_app/utils/logging.dart';
-import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:chat_app/controllers/auth_controller.dart';
 import 'package:chat_app/screens/login_screen/animations/change_screen_animations.dart';
 import 'package:chat_app/screens/login_screen/components/bottom_text.dart';
 import 'package:chat_app/screens/login_screen/components/top_text.dart';
 import 'package:chat_app/utils/helper_functions.dart';
-
+import 'package:chat_app/utils/logging.dart';
+import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 
 enum Screens { createAccount, welcomeBack }
 
@@ -210,8 +210,13 @@ class _LoginContentState extends State<LoginContent>
         vertical: 16,
       ),
       child: ElevatedButton(
-        onPressed: () {
-          logger.i("Login");
+        onPressed: () async {
+          var username = "sappy";
+          logger.i("Login $username");
+          await AuthController().signInWithUsernameandPassword(
+            username: username,
+            password: "sappy@1234",
+          );
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),
