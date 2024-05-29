@@ -2,7 +2,7 @@ import 'package:chat_app/components/my_button.dart';
 import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/register_page.dart';
 import 'package:chat_app/services/auth_service.dart';
-import 'package:chat_app/services/logging.dart';
+import 'package:chat_app/utils/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/components/my_textfield.dart';
 import 'package:page_transition/page_transition.dart';
