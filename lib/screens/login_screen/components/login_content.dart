@@ -1,5 +1,6 @@
 import 'package:chat_app/constants.dart';
 import 'package:chat_app/controllers/auth_controller.dart';
+import 'package:chat_app/models/user.dart';
 import 'package:chat_app/screens/login_screen/animations/change_screen_animations.dart';
 import 'package:chat_app/screens/login_screen/components/bottom_text.dart';
 import 'package:chat_app/screens/login_screen/components/top_text.dart';
@@ -161,11 +162,20 @@ class _LoginContentState extends State<LoginContent>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/images/facebook.png"),
+          GestureDetector(
+            child: Image.asset("assets/images/facebook.png"),
+            onTap: () {},
+          ),
           const SizedBox(
             width: 24,
           ),
-          Image.asset("assets/images/google.png"),
+          GestureDetector(
+            child: Image.asset("assets/images/google.png"),
+            onTap: () {
+              logger.i("Google Sign In");
+              AuthController().signUpWithGoogle();
+            },
+          ),
         ],
       ),
     );
@@ -211,12 +221,13 @@ class _LoginContentState extends State<LoginContent>
       ),
       child: ElevatedButton(
         onPressed: () async {
-          var username = "sappy";
-          logger.i("Login $username");
-          await AuthController().signInWithUsernameandPassword(
-            username: username,
-            password: "sappy@1234",
+          UserModel user = UserModel(
+            username: "sappy",
+            email: "sappy@sappy.com",
           );
+          logger.i("Login ${user.username}");
+          await AuthController()
+              .signUpWithEmailandPassword(user: user, password: "sappy@1234");
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 14),

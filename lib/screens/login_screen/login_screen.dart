@@ -1,8 +1,10 @@
 import 'dart:math' as math;
 
+import 'package:chat_app/controllers/auth_controller.dart';
 import 'package:chat_app/screens/login_screen/components/center_widget/center_widget.dart';
 import 'package:chat_app/screens/login_screen/components/login_content.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +16,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final UserController controller = Get.put(UserController());
+
   Widget topWidget(double screenWidth) {
     return Transform.rotate(
       angle: -35 * math.pi / 180,

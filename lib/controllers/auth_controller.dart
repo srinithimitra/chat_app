@@ -3,9 +3,11 @@ import 'package:chat_app/utils/logging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
 
@@ -56,9 +58,81 @@ class AuthController {
   Future<void> signUpWithEmailandPassword({
     required UserModel user,
     required String password,
-  }) async {}
+  }) async {
+    // Sign up with email and password
+    UserCredential userCredential =
+        await _firebaseAuth.createUserWithEmailAndPassword(
+      email: user.email,
+      password: password,
+    );
 
-  Future<void> signUpWithGoogle(UserModel user) async {}
+    logger.i("User signed up: $userCredential");
+
+    // save the user to firestore
+    await users.add({
+      'id': userCredential.user!.uid,
+      'username': user.username,
+      'email': user.email,
+    }).then((value) {
+      logger.i("User added to firestore: $value");
+      // set user as logged in
+      UserModel newUser = UserModel(
+        id: userCredential.user!.uid,
+        username: user.username,
+        email: user.email,
+      );
+      newUser.setIsLoggedIn(true);
+      // store user data using getx
+      Get.find<UserController>().user = newUser;
+    }).catchError((error) {
+      logger.e("Failed to add user to firestore: $error");
+    });
+  }
+
+  Future<void> signUpWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        final UserCredential userCredential =
+            await _firebaseAuth.signInWithCredential(credential);
+
+        logger.d("User signed up with Google: ${userCredential.user}");
+
+        // save the user to firestore
+        await users.add({
+          'id': userCredential.user!.uid,
+          'username': userCredential.user!.displayName,
+          'email': userCredential.user!.email,
+          'profilePic': userCredential.user!.photoURL,
+        }).then((value) {
+          logger.i("User added to firestore: $value");
+          // set user as logged in
+          UserModel newUser = UserModel(
+            id: userCredential.user!.uid,
+            username: userCredential.user!.displayName.toString(),
+            email: userCredential.user!.email.toString(),
+          );
+          newUser.setIsLoggedIn(true);
+          // store user data using getx
+          Get.find<UserController>().user = newUser;
+        }).catchError((error) {
+          logger.e("Failed to add user to firestore: $error");
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      logger.e("Failed to sign in with Google: $e");
+    }
+  }
 
   Future<void> signUpWithFacebook(UserModel user) async {}
 
