@@ -1,5 +1,5 @@
 import 'package:chat_app/constants.dart';
-import 'package:chat_app/controllers/auth_controller.dart';
+import 'package:chat_app/controllers/auth.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/screens/login_screen/animations/change_screen_animations.dart';
 import 'package:chat_app/screens/login_screen/components/bottom_text.dart';

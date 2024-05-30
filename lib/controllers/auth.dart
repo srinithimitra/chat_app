@@ -1,3 +1,4 @@
+import 'package:chat_app/controllers/user.dart';
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/utils/logging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -144,11 +145,3 @@ class AuthController {
   }
 }
 
-class UserController extends GetxController {
-  UserModel user = UserModel(username: "", email: "");
-
-  void setUser(UserModel user) {
-    this.user = user;
-    update();
-  }
-}

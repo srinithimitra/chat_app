@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:chat_app/controllers/auth_controller.dart';
+import 'package:chat_app/controllers/user.dart';
 import 'package:chat_app/screens/login_screen/components/center_widget/center_widget.dart';
 import 'package:chat_app/screens/login_screen/components/login_content.dart';
 import 'package:flutter/material.dart';
