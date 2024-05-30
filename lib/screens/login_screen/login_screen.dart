@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:chat_app/controllers/user.dart';
+import 'package:chat_app/screens/home_screen/home_screen.dart';
 import 'package:chat_app/screens/login_screen/components/center_widget/center_widget.dart';
-import 'package:chat_app/screens/login_screen/components/login_content.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final UserController controller = Get.put(UserController());
 
   Widget topWidget(double screenWidth) {
@@ -76,7 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: bottomWidget(size.width),
           ),
           CenterWidget(size: size),
-          const LoginContent()
+          // const LoginContent()
+          const HomeScreen()
         ],
       ),
     );
